@@ -1,5 +1,6 @@
 import sys
 
+from PyQt5.QtCore import QEvent
 from PyQt5.QtWidgets import QTabWidget, QWidget, QApplication, QTabBar, QTextEdit
 from PyQt5.uic.properties import QtCore
 
@@ -14,14 +15,17 @@ class TabContainer(QTabWidget):
         # self.connect
         # self.connect(self.closeTab)  # 信号与槽
         #self.tabCloseRequested()
+        self.removeTab(1)
+
     def add(self,QWidget):
         self.addTab(QWidget,"asdasdas")
+    def tabCloseRequested(self, p_int):
+        self.removeTab(p_int)
 
-    def tabCloseRequested(self,i):
-        self.removeTab(i)
-    def mouseDoubleClickEvent(self):
-        print("dasdasdadsadsadasdasdasd")
+    def mousePressEvent(self,QMouseEvent):
+        if QMouseEvent.type() == QEvent.MouseButtonDblClick:
 
+            print('mousePressEvent')
 
 # if __name__ == '__main__':
 #     app = QApplication(sys.argv)

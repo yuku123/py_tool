@@ -30,8 +30,15 @@ class NavigationTree(QTreeWidget):
         root.setText(1, 'value')
 
         child1 = QTreeWidgetItem(root)  # 指出父结点
-        child1.setText(0, 'aa')
-        child1.setText(1, 'aa')
+        child1.setText(0, '测试')
+
+        child1_1 = QTreeWidgetItem(child1)
+        child1_1.setText(0, 'initial')
+        child1_1.setText(1, 'initial')
+
+        child1_2 = QTreeWidgetItem(child1)
+        child1_2.setText(0, 'test1')
+        child1_2.setText(1, 'test1')
 
         child2 = QTreeWidgetItem(root)
         child2.setText(0, '模板配置 ')
@@ -54,10 +61,7 @@ class NavigationTree(QTreeWidget):
 
     def onClicked(self):
         item = self.currentItem()
-        print('Key=%s,value=%s' % (item.text(0), item.text(1)))
-        if item.text(1) == 'aa':
-            self.mainFrame.tabContainer.add(QWidget())
-        elif item.text(0) == '查询人员信息':
-            self.on_pushButton2_clicked()
-        else:
-            print('返回主界面')
+        key = item.text(0)
+        value = item.text(1)
+        widget = self.mainFrame.stackedContainer.getIndex(value)
+        self.mainFrame.stackedContainer.setCurrentWidget(widget)
