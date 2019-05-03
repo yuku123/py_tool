@@ -35,11 +35,7 @@ class MainFrame(QMainWindow):
     def configThisWindow(self):
         self.split.addWidget(self.navigationTree)
         self.split.setSizes([20,]) #设置分隔条位置
-
         self.split.addWidget(self.stackedContainer)
-
-        # self.split.setStretchFactor(0,1)
-        # self.split.setStretchFactor(1,7)
 
         mainLayout = QHBoxLayout(self)
         mainLayout.addWidget(self.split)

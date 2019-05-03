@@ -1,6 +1,7 @@
 import sys
 
 from PyQt5.QtWidgets import QTreeWidget, QTreeWidgetItem, QApplication, QVBoxLayout, QHBoxLayout, QWidget
+import xml.dom.minidom
 
 
 class NavigationTree(QTreeWidget):
@@ -26,31 +27,35 @@ class NavigationTree(QTreeWidget):
 
     def build_tree(self):
         root = QTreeWidgetItem(self)
-        root.setText(0, '功能')
-        root.setText(1, 'value')
+        # root.setText(0, '功能')
+        # root.setText(1, 'value')
+        #
+        # child1 = QTreeWidgetItem(root)  # 指出父结点
+        # child1.setText(0, '测试')
+        #
+        # child1_1 = QTreeWidgetItem(child1)
+        # child1_1.setText(0, 'initial')
+        # child1_1.setText(1, 'initial')
+        #
+        # child1_2 = QTreeWidgetItem(child1)
+        # child1_2.setText(0, 'test1')
+        # child1_2.setText(1, 'test1')
+        #
+        # child2 = QTreeWidgetItem(root)
+        # child2.setText(0, '模板配置 ')
+        #
+        # child3 = QTreeWidgetItem(root)
+        # child3.setText(0, '信息配置')
+        #
+        # child4 = QTreeWidgetItem(child3)
+        # child4.setText(0, '显示面板')
+        #
+        # child5 = QTreeWidgetItem(child3)
+        # child5.setText(0, '显示面板')
+        dom = xml.dom.minidom.parse('tree.xml').documentElement
+        self.prase(dom,root)
 
-        child1 = QTreeWidgetItem(root)  # 指出父结点
-        child1.setText(0, '测试')
 
-        child1_1 = QTreeWidgetItem(child1)
-        child1_1.setText(0, 'initial')
-        child1_1.setText(1, 'initial')
-
-        child1_2 = QTreeWidgetItem(child1)
-        child1_2.setText(0, 'test1')
-        child1_2.setText(1, 'test1')
-
-        child2 = QTreeWidgetItem(root)
-        child2.setText(0, '模板配置 ')
-
-        child3 = QTreeWidgetItem(root)
-        child3.setText(0, '信息配置')
-
-        child4 = QTreeWidgetItem(child3)
-        child4.setText(0, '显示面板')
-
-        child5 = QTreeWidgetItem(child3)
-        child5.setText(0, '显示面板')
 
         # 以下两句是主窗口的设置
         self.addTopLevelItem(root)
@@ -65,3 +70,12 @@ class NavigationTree(QTreeWidget):
         value = item.text(1)
         widget = self.mainFrame.stackedContainer.getIndex(value)
         self.mainFrame.stackedContainer.setCurrentWidget(widget)
+
+    def prase(self,node, widget):
+        nodename = node.getAttribute("nodename")
+        nodevalue = node.getAttribute("nodevalue")
+        widget.setText(0, nodename)
+        widget.setText(1, nodevalue)
+        for nodes in node.childNodes:
+            if nodes.nodeType == 1:
+                self.prase(nodes, QTreeWidgetItem(widget))
