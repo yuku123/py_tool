@@ -68,6 +68,7 @@ class NavigationTree(QTreeWidget):
         item = self.currentItem()
         key = item.text(0)
         value = item.text(1)
+        print("click---"+key+":"+value)
         widget = self.mainFrame.stackedContainer.getIndex(value)
         self.mainFrame.stackedContainer.setCurrentWidget(widget)
 
