@@ -1,0 +1,2 @@
+//按钮进行关闭
+    btn.clicked.connect(QCoreApplication.instance().quit)
